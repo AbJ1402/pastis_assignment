@@ -1,0 +1,22 @@
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store
+
+# Dataset and derived feature cache (see README for the expected data layout)
+PASTIS_subset/
+cache/
+
+# Trained model binaries total ~56 MB; reproduce with `python -m src.train`
+outputs/models/*.joblib
+
+# Raw run logs; per-model timings and chosen settings are kept in outputs/metrics/training_log.json
+outputs/logs/
+
+# Local-only files: editor config, personal notes, scratch notebook, QGIS project with
+# absolute local paths, and the original assignment brief
+WORKFLOW_GUIDE.md
+.vscode-upload.json
+EDA.ipynb
+visualize.qgz
+Geo Data Scientist Assignment.pdf

@@ -1,0 +1,76 @@
+seed: 42
+n_jobs: 8
+
+paths:
+  data_root: PASTIS_subset
+  splits_dir: splits
+  cache_dir: cache
+  models_dir: outputs/models
+  metrics_dir: outputs/metrics
+  figures_dir: outputs/figures
+  predictions_dir: outputs/predictions
+
+labels:
+  n_classes: 20
+  ignore_index: 19          # PASTIS "void" label: excluded from training and evaluation
+
+split:
+  # Official PASTIS folds 1-5 from metadata.geojson. Chosen by the rule in src/splits.py
+  # (max training class coverage -> max val/test coverage -> closest class distributions).
+  # Set both to null to re-run the automatic selection.
+  val_fold: 4
+  test_fold: 5
+
+features:
+  reflectance_scale: 10000.0
+  clip: [0.0, 1.0]
+  indices: [NDVI, NDMI]     # per-date normalised differences added to the 10 raw bands
+
+sampling:
+  max_pixels_per_class: 15000   # per-class cap on training pixels (drawn across all training patches)
+  class_weight_power: 0.5       # sample weight ~ class_frequency ** -power (0 = none, 1 = fully balanced)
+  early_stopping_pixels_per_class: 3000   # validation subsample used for GBDT early stopping
+
+models:
+  majority: {}
+  # `search`: small grid scored by macro-F1 on the class-capped validation subsample (the same
+  # pixels used for GBDT early stopping); the best candidate is kept. Forests and XGBoost use fixed
+  # settings (XGBoost takes ~8 min per fit on 8 cores).
+  logistic_regression:
+    max_iter: 2000
+    search:
+      C: [0.01, 0.1, 1.0]
+  svm_rbf:
+    max_pixels_per_class: 5000   # RBF-SVM cost grows ~quadratically with samples
+    pca_components: 48
+    search:   # a first grid C {1, 10, 100} x gamma {0.001, 0.003, 0.01} peaked at its C=1, gamma=0.001 corner
+      C: [0.3, 1.0, 3.0]
+      gamma: [0.0003, 0.001, 0.003]   # 'scale' is ~0.002 for these standardised PCA features
+  # Forest size is bounded by RAM (~1.3 GB free on the dev machine): measured ~1.4 MB/tree at
+  # leaf>=5 on the training sample, i.e. ~300 MB for the forest.
+  random_forest:
+    n_estimators: 200
+    max_features: sqrt
+    min_samples_leaf: 5
+  # GBDT early stopping monitors classification error on the validation subsample (the last
+  # XGBoost metric / first LightGBM metric); log-loss is recorded alongside for comparison.
+  xgboost:
+    n_estimators: 600
+    learning_rate: 0.1
+    max_depth: 6
+    subsample: 0.8
+    colsample_bytree: 0.5
+    eval_metric: [mlogloss, merror]
+    early_stopping_rounds: 40
+  lightgbm:
+    n_estimators: 1500
+    learning_rate: 0.1
+    metric: [multi_error, multi_logloss]
+    subsample: 0.8
+    subsample_freq: 1
+    colsample_bytree: 0.5
+    reg_lambda: 1.0
+    early_stopping_rounds: 50
+    search:   # does stronger regularisation help transfer to unseen patches?
+      num_leaves: [15, 63]
+      min_child_samples: [20, 200]

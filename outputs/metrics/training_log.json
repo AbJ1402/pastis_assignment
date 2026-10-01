@@ -1,0 +1,193 @@
+{
+  "models": {
+    "majority": {
+      "params": {},
+      "selected_params": {},
+      "fit_seconds": 0.0,
+      "search_seconds": 0.0,
+      "predict_seconds": 0.0
+    },
+    "logistic_regression": {
+      "params": {
+        "max_iter": 2000,
+        "search": {
+          "C": [
+            0.01,
+            0.1,
+            1.0
+          ]
+        }
+      },
+      "selected_params": {
+        "max_iter": 2000,
+        "C": 0.1
+      },
+      "n_iter": 238,
+      "fit_seconds": 69.7,
+      "search_seconds": 227.8,
+      "predict_seconds": 1.0
+    },
+    "svm_rbf": {
+      "params": {
+        "max_pixels_per_class": 5000,
+        "pca_components": 48,
+        "search": {
+          "C": [
+            0.3,
+            1.0,
+            3.0
+          ],
+          "gamma": [
+            0.0003,
+            0.001,
+            0.003
+          ]
+        }
+      },
+      "selected_params": {
+        "pca_components": 48,
+        "C": 1.0,
+        "gamma": 0.0003
+      },
+      "n_support_vectors": 21241,
+      "pca_explained_variance": 0.9251816272735596,
+      "fit_seconds": 23.9,
+      "search_seconds": 461.6,
+      "predict_seconds": 376.3
+    },
+    "random_forest": {
+      "params": {
+        "n_estimators": 200,
+        "max_features": "sqrt",
+        "min_samples_leaf": 5
+      },
+      "selected_params": {
+        "n_estimators": 200,
+        "max_features": "sqrt",
+        "min_samples_leaf": 5
+      },
+      "fit_seconds": 124.6,
+      "search_seconds": 0.0,
+      "predict_seconds": 10.7
+    },
+    "xgboost": {
+      "params": {
+        "n_estimators": 600,
+        "learning_rate": 0.1,
+        "max_depth": 6,
+        "subsample": 0.8,
+        "colsample_bytree": 0.5,
+        "eval_metric": [
+          "mlogloss",
+          "merror"
+        ],
+        "early_stopping_rounds": 40
+      },
+      "selected_params": {
+        "n_estimators": 600,
+        "learning_rate": 0.1,
+        "max_depth": 6,
+        "subsample": 0.8,
+        "colsample_bytree": 0.5,
+        "eval_metric": [
+          "mlogloss",
+          "merror"
+        ],
+        "early_stopping_rounds": 40
+      },
+      "n_boosting_rounds": 93,
+      "fit_seconds": 512.8,
+      "search_seconds": 0.0,
+      "predict_seconds": 1.8
+    },
+    "lightgbm": {
+      "params": {
+        "n_estimators": 1500,
+        "learning_rate": 0.1,
+        "metric": [
+          "multi_error",
+          "multi_logloss"
+        ],
+        "subsample": 0.8,
+        "subsample_freq": 1,
+        "colsample_bytree": 0.5,
+        "reg_lambda": 1.0,
+        "early_stopping_rounds": 50,
+        "search": {
+          "num_leaves": [
+            15,
+            63
+          ],
+          "min_child_samples": [
+            20,
+            200
+          ]
+        }
+      },
+      "selected_params": {
+        "n_estimators": 1500,
+        "learning_rate": 0.1,
+        "metric": [
+          "multi_error",
+          "multi_logloss"
+        ],
+        "subsample": 0.8,
+        "subsample_freq": 1,
+        "colsample_bytree": 0.5,
+        "reg_lambda": 1.0,
+        "early_stopping_rounds": 50,
+        "num_leaves": 15,
+        "min_child_samples": 200
+      },
+      "n_boosting_rounds": 46,
+      "fit_seconds": 63.3,
+      "search_seconds": 309.9,
+      "predict_seconds": 1.6
+    }
+  },
+  "training_sample": {
+    "n_pixels": 141831,
+    "n_features": 552,
+    "class_counts": {
+      "Background": 14743,
+      "Meadow": 14855,
+      "Soft winter wheat": 15064,
+      "Corn": 14987,
+      "Winter barley": 15038,
+      "Winter rapeseed": 15122,
+      "Spring barley": 2131,
+      "Sunflower": 4607,
+      "Grapevine": 1345,
+      "Winter triticale": 10335,
+      "Winter durum wheat": 247,
+      "Fruits, vegetables, flowers": 500,
+      "Potatoes": 158,
+      "Leguminous fodder": 8892,
+      "Soybeans": 15020,
+      "Orchard": 75,
+      "Mixed cereal": 4330,
+      "Sorghum": 4382
+    },
+    "class_weights": {
+      "Background": 0.8376,
+      "Meadow": 0.8344,
+      "Soft winter wheat": 0.8286,
+      "Corn": 0.8307,
+      "Winter barley": 0.8293,
+      "Winter rapeseed": 0.827,
+      "Spring barley": 2.2031,
+      "Sunflower": 1.4984,
+      "Grapevine": 2.7731,
+      "Winter triticale": 1.0004,
+      "Winter durum wheat": 6.4711,
+      "Fruits, vegetables, flowers": 4.5482,
+      "Potatoes": 8.0909,
+      "Leguminous fodder": 1.0785,
+      "Soybeans": 0.8298,
+      "Orchard": 11.7434,
+      "Mixed cereal": 1.5455,
+      "Sorghum": 1.5363
+    },
+    "early_stopping_pixels": 29747
+  }
+}

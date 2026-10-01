@@ -1,0 +1,17 @@
+model,C,val_subsample_macro_f1,fit_seconds,gamma,num_leaves,min_child_samples
+logistic_regression,0.01,0.6368,59.2,,,
+logistic_regression,0.1,0.6423,69.7,,,
+logistic_regression,1.0,0.6411,98.6,,,
+svm_rbf,0.3,0.6168,36.3,0.0003,,
+svm_rbf,0.3,0.6021,24.1,0.001,,
+svm_rbf,0.3,0.4898,22.9,0.003,,
+svm_rbf,1.0,0.6213,23.9,0.0003,,
+svm_rbf,1.0,0.5632,16.3,0.001,,
+svm_rbf,1.0,0.4853,16.0,0.003,,
+svm_rbf,3.0,0.6096,15.9,0.0003,,
+svm_rbf,3.0,0.5188,12.3,0.001,,
+svm_rbf,3.0,0.4863,14.4,0.003,,
+lightgbm,,0.6199,62.0,,15.0,20.0
+lightgbm,,0.6202,63.3,,15.0,200.0
+lightgbm,,0.6057,92.8,,63.0,20.0
+lightgbm,,0.6184,90.9,,63.0,200.0
